@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Marketplace.Views.ProductSearchPage"
+             Title="Перечень товаров">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Поиск"
+                 Clicked="ToolbarItem_Clicked"/>
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.Content>
+        <StackLayout>
+            <ContentView x:Name="filterContainer" IsVisible="false">
+                <Frame BorderColor="#333333"
+                   Margin="10"
+                   CornerRadius="5"
+                   Padding="10">
+                    <StackLayout Padding="40,0,40,0">
+                        <Picker x:Name="pickerCategory"
+                            SelectedIndex="0">
+                            <Picker.Items>
+                                <x:String>Любая</x:String>
+                                <x:String>Заполнить</x:String>
+                                <x:String>Заполнить</x:String>
+                                <x:String>Заполнить</x:String>
+                                <x:String>Заполнить</x:String>
+                                <x:String>Заполнить</x:String>
+                            </Picker.Items>
+                        </Picker>
+                        <Entry x:Name="tbName" Placeholder="Название..." />
+                        <Button x:Name="btnSearch" Text="Найти"
+                                Margin="0,0,0,0"
+                                Clicked="btnSearch_Clicked"/>
+                    </StackLayout>
+                </Frame>
+            </ContentView>
+            <CollectionView x:Name="cvProduct"
+            SelectionMode="Single"
+            SelectionChanged="CvProduct_SelectionChanged">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical"
+                     Span="2" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Padding="2">
+                            <Frame BorderColor="#333333"
+                               CornerRadius="5"
+                               Padding="10">
+                                <!-- Ваш код разметки элемента плитки -->
+                                <StackLayout>
+                                    <Image Source="{Binding PhotoName}"
+                                       HeightRequest="150"
+                                       WidthRequest="200"/>
+                                    <Label Text="{Binding Name}"
+                                       FontAttributes="Bold"
+                                       FontSize="16"/>
+                                    <Label Text="{Binding getPrice}"
+                                       FontAttributes="Bold"
+                                       FontSize="12"/>
+                                    <Label Text="{Binding getCategory}"
+                                       FontSize="12"/>
+                                </StackLayout>
+                            </Frame>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

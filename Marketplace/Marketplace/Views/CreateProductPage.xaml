@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Marketplace.Views.CreateProductPage"
+             Title="Добавление товара">
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout Orientation="Vertical"
+                         Margin="20,10,20,10">
+                <Image Source="icon_image.png"
+                       WidthRequest="350"
+                       x:Name="imgAd"
+                       HeightRequest="350"/>
+                <Button x:Name="btnGetPhoto" Text="Выбрать фото"
+                        Clicked="BtnGetPhoto_Clicked"
+                        HorizontalOptions="CenterAndExpand"/>
+
+
+                <Entry x:Name="tbName" Placeholder="Название..." />
+                <Editor x:Name="tbDescription" Placeholder="Описание..." 
+                        AutoSize="TextChanges"
+                        MaxLength="500"
+                        HeightRequest="-1"/>
+                <Picker x:Name="pickerCategory">
+                    <Picker.Items>
+                        <x:String>Заполнить</x:String>
+                        <x:String>Заполнить</x:String>
+                        <x:String>Заполнить</x:String>
+                        <x:String>Заполнить</x:String>
+                        <x:String>Заполнить</x:String>
+                    </Picker.Items>
+                </Picker>
+                <Entry x:Name="tbPrice" Placeholder="Цена..." 
+                       Keyboard="Numeric"/>
+
+                <Entry x:Name="tbStockQuantity" Placeholder="Количество запасов..."/>
+
+                <Button x:Name="btnCreateAd" Text="Опубликовать"
+                        Clicked="BtnCreateAd_Clicked"
+                        HorizontalOptions="CenterAndExpand"
+                        Margin="0,0,0,10"/>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

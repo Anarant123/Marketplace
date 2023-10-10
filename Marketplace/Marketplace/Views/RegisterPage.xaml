@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Marketplace.Views.RegisterPage"         
+             Title="Регистрация"
+             BackgroundColor="#FFFFFF">
+    <ContentPage.Resources>
+        <Style TargetType="Entry">
+            <Setter Property="FontSize" Value="Title"/>
+        </Style>
+    </ContentPage.Resources>
+    
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout Margin="20,10,20,10">
+                <Entry x:Name="tbFirstName" Placeholder="Имя..."/>
+                <Entry x:Name="tbLastName" Placeholder="Фамилия..."/>
+                <Entry x:Name="tbPhone" Placeholder="Телефон..."
+                   Keyboard="Telephone"/>
+                <Entry x:Name="tbEmail" Placeholder="Почта..." 
+                   Keyboard="Email"/>
+                <Entry x:Name="tbPassword1" Placeholder="Пароль..." 
+                       IsPassword="True"/>
+                <Entry x:Name="tbPassword2" Placeholder="Повтор пароля..." 
+                       IsPassword="True"/>
+                <Entry x:Name="tbImage" Placeholder="Image Url..." 
+                       IsPassword="True"/>
+                <Button x:Name="btnRegistration" Text="Зарегистрироваться"
+                    Margin="0,20,0,0"
+                    Clicked="BtnRegistration_Clicked"/>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Shell xmlns="http://xamarin.com/schemas/2014/forms" 
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       xmlns:views="clr-namespace:Marketplace.Views"
+       x:Class="Marketplace.AppShell">
+    
+    <Shell.Resources>
+        <ResourceDictionary>
+            <Style x:Key="BaseStyle" TargetType="Element">
+                <Setter Property="Shell.BackgroundColor" Value="{StaticResource Primary}" />
+                <Setter Property="Shell.ForegroundColor" Value="White" />
+                <Setter Property="Shell.TitleColor" Value="White" />
+                <Setter Property="Shell.DisabledColor" Value="#B4FFFFFF" />
+                <Setter Property="Shell.UnselectedColor" Value="#95FFFFFF" />
+                <Setter Property="Shell.TabBarBackgroundColor" Value="#333333" />
+                <Setter Property="Shell.TabBarForegroundColor" Value="White"/>
+                <Setter Property="Shell.TabBarUnselectedColor" Value="#95FFFFFF"/>
+                <Setter Property="Shell.TabBarTitleColor" Value="White"/>
+            </Style>
+            <Style TargetType="TabBar" BasedOn="{StaticResource BaseStyle}" />
+            <Style TargetType="FlyoutItem" BasedOn="{StaticResource BaseStyle}" />
+        </ResourceDictionary>
+    </Shell.Resources>
+
+    <TabBar x:Name="tabBar" >
+        <Tab Title="Поиск" Icon="icon_loop.png" x:Name="tab1">
+            <ShellContent ContentTemplate="{DataTemplate views:ProductSearchPage}" />
+        </Tab>
+        <Tab Title="Добавить" Icon="icon_plus.png">
+            <ShellContent ContentTemplate="{DataTemplate views:CreateProductPage}" />
+        </Tab>
+        <Tab Title="Профиль" Icon="icon_person.png">
+            <ShellContent ContentTemplate="{DataTemplate views:ProfilePage}" />
+        </Tab>
+    </TabBar>
+</Shell>

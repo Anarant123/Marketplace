@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Marketplace.Views.ProductInfoPage">
+    <ContentPage.Resources>
+        <Style TargetType="Image" x:Key="img">
+            <Setter Property="WidthRequest" Value="20"/>
+            <Setter Property="HeightRequest" Value="20"/>
+        </Style>
+
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout Orientation="Vertical"
+                     Margin="20,10,20,10"
+                     Spacing="10">
+                <Image Source="{Binding PhotoName}"
+                   x:Name="imgProduct"
+                   WidthRequest="350"
+                   HeightRequest="350"/>
+
+                <Label x:Name="lbName" Text="Название" FontAttributes="Bold"/>
+                <Label x:Name="lbDescription" Text="Описание"/>
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="Цена: "/>
+                    <Label x:Name="lbPrice"
+                       Text="0"/>
+                </StackLayout>
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="Количество: "/>
+                    <Label x:Name="lbStockQuantity"
+                           Text="0"/>
+                </StackLayout>
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="Продавец: "/>
+                    <Label x:Name="lbUserSeller"
+                           Text="0"/>
+                </StackLayout>
+
+                <Button x:Name="btnAddToBasket" Text="Добавить в корзину"
+                    Clicked="BtnAddToBasket_Clicked"
+                    HorizontalOptions="CenterAndExpand"
+                    WidthRequest="250"
+                    Margin="0,0,0,5"/>
+
+                <Editor x:Name="tbComment" Placeholder="Отзыв..." 
+                        AutoSize="TextChanges"
+                        MaxLength="500"
+                        HeightRequest="-1"/>
+                <Button x:Name="btnSubmitComment" Text="Отправить отзыв"
+                        Clicked="btnSubmitComment_Clicked"
+                        HorizontalOptions="CenterAndExpand"
+                        WidthRequest="250"
+                        Margin="0,0,0,5"/>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

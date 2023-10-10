@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Marketplace.Views.AuthorizationPage"
+             Title="Авторизация"
+             BackgroundColor="#FFFFFF">
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout Margin="20,10,20,10">
+                <Entry x:Name="tbEmail" Placeholder="Почта..." 
+                       FontSize="Title"/>
+                <Entry x:Name="tbPassword" Placeholder="Пароль..." 
+                       FontSize="Title" IsPassword="True"/>
+                <Button x:Name="btnSignIn" Text="Войти"
+                        Margin="0,20,0,0"
+                        Clicked="BtnSignIn_Clicked"/>
+                <Button x:Name="btnSignUp" Text="Зарегестрироваться"
+                        Margin="0,20,0,0"
+                        Clicked="BtnSignUp_Clicked"
+                        FontSize="12"
+                        Grid.Column="0"/>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

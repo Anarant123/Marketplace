@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Application xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Marketplace.App">
+    <Application.Resources>
+        <Style TargetType="Editor">
+            <Setter Property="FontSize" Value="Body" />
+            <Setter Property="Background" Value="#FFFFFF" />
+            <Setter Property="TextColor" Value="#333333" />
+            <Setter Property="FontFamily" Value="Segoe UI" />
+            <Setter Property="AutoSize" Value="TextChanges"/>
+        </Style>
+
+        <Style TargetType="Entry">
+            <Setter Property="FontSize" Value="Body" />
+            <Setter Property="Background" Value="#FFFFFF" />
+            <Setter Property="TextColor" Value="#333333" />
+            <Setter Property="FontFamily" Value="Segoe UI" />
+        </Style>
+
+        <Style TargetType="Label">
+            <Setter Property="FontSize" Value="Body" />
+            <Setter Property="Background" Value="#FFFFFF" />
+            <Setter Property="TextColor" Value="#333333" />
+            <Setter Property="FontFamily" Value="Segoe UI" />
+        </Style>
+
+        <Style TargetType="Button">
+            <Setter Property="BackgroundColor" Value="#333333" />
+            <Setter Property="TextColor" Value="#FFFFFF" />
+            <Setter Property="BorderColor" Value="#666666" />
+            <Setter Property="BorderWidth" Value="1" />
+            <Setter Property="Padding" Value="10,5" />
+            <Setter Property="FontFamily" Value="SegoeUI" />
+            <Setter Property="FontSize" Value="Body" />
+        </Style>
+
+        <Style TargetType="NavigationPage">
+            <Setter Property="BarBackgroundColor" Value="#333333" />
+        </Style>
+
+        <ResourceDictionary>
+            <Color x:Key="Primary">#333333</Color>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

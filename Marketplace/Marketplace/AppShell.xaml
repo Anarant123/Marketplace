@@ -26,8 +26,14 @@
         <Tab Title="Поиск" Icon="icon_loop.png" x:Name="tab1">
             <ShellContent ContentTemplate="{DataTemplate views:ProductSearchPage}" />
         </Tab>
+        <Tab Title="Мои" Icon="icon_my_products.png">
+            <ShellContent ContentTemplate="{DataTemplate views:MyProductsPage}" />
+        </Tab>
         <Tab Title="Добавить" Icon="icon_plus.png">
             <ShellContent ContentTemplate="{DataTemplate views:CreateProductPage}" />
+        </Tab>
+        <Tab Title="Корзина" Icon="icon_basket.png">
+            <ShellContent ContentTemplate="{DataTemplate views:BasketPage}" />
         </Tab>
         <Tab Title="Профиль" Icon="icon_person.png">
             <ShellContent ContentTemplate="{DataTemplate views:ProfilePage}" />

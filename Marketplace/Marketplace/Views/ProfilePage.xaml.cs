@@ -65,5 +65,10 @@ namespace Marketplace.Views
             //    await DisplayAlert("Сообщение об ошибке", ex.Message, "OK");
             //}
         }
+
+        private async void btnShowMyOrders_Clicked(object sender, EventArgs e)
+        {
+            await Shell.Current.GoToAsync(nameof(MyOrdersPage));
+        }
     }
 }

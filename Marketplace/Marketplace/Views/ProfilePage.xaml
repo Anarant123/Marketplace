@@ -8,25 +8,37 @@
             <StackLayout Orientation="Vertical"
                          Margin="20,10,20,10"
                          Spacing="10">
-                <Image Source="{Binding PhotoName}"
+                <Image Source="icon_image.png"
                        x:Name="imgProfile"
-                       WidthRequest="350"
-                       HeightRequest="350"/>
-                <Button x:Name="btnGetPhoto" Text="Выбрать фото"
-                        FontSize="16"
-                        Clicked="BtnGetPhoto_Clicked"
-                        HorizontalOptions="CenterAndExpand"/>
+                       WidthRequest="300"
+                       HeightRequest="300"/>
+                <Grid VerticalOptions="CenterAndExpand">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="btnGetPhoto" Text="Выбрать фото"
+                            FontSize="14"
+                            Clicked="BtnGetPhoto_Clicked"
+                            VerticalOptions="CenterAndExpand"
+                            Grid.Column="0"/>
+                    <Button x:Name="btnSaveChanges" Text="Сохранить изменения"
+                            FontSize="14"
+                            Clicked="BtnSaveChanges_Clicked"
+                            VerticalOptions="CenterAndExpand"
+                            Grid.Column="1"/>
+                </Grid>
                 <Entry x:Name="tbFirstName" Placeholder="Имя..."/>
                 <Entry x:Name="tbLastName" Placeholder="Фамилия..."/>
                 <Entry x:Name="tbPhone" Placeholder="Телефон..."
                        Keyboard="Telephone"/>
                 <Entry x:Name="tbEmail" Placeholder="Почта..." 
                        Keyboard="Email"/>
-                <Button x:Name="btnSaveChanges" Text="Сохранить изменения"
+                <Button x:Name="btnShowMyOrders" Text="Мои заказы"
                         FontSize="16"
-                        Clicked="BtnSaveChanges_Clicked"
-                        HorizontalOptions="CenterAndExpand"
-                        Margin="0,0,0,10"/>
+                        Clicked="btnShowMyOrders_Clicked"
+                        HorizontalOptions="Fill"
+                        Margin="0,0,0,10"/> 
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

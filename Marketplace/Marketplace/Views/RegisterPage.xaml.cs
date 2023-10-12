@@ -1,13 +1,16 @@
-﻿using Marketplace.Models;
+﻿using Marketplace.Models.db;
+using Marketplace.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using static Xamarin.Essentials.Permissions;
+using System.Text.Json;
 
 namespace Marketplace.Views
 {
@@ -21,8 +24,6 @@ namespace Marketplace.Views
 
         private async void BtnRegistration_Clicked(object sender, EventArgs e)
         {
-            DateTime currentDate = DateTime.Now;
-
             if (tbPassword1.Text != tbPassword2.Text)
             {
                 await DisplayAlert("Ошибка", "Пароли должны совпадать!", "ОК");
@@ -35,26 +36,27 @@ namespace Marketplace.Views
                 return;
             }
 
-            //PersonReg person = new()
-            //{
-            //    Login = tbLogin.Text,
-            //    Birthday = dpBirthday.Date,
-            //    Phone = tbPhone.Text,
-            //    Email = tbEmail.Text,
-            //    Password = tbPassword1.Text,
-            //    ConfirmPassword = tbPassword2.Text
-            //};
+            using (var httpClient = new HttpClient())
+            {
+                string apiUrl = $"{Context.host}/api/user/create";
 
-            //var result = await Context.Api.Registr(person);
+                User user = new User(tbFirstName.Text, tbLastName.Text, tbEmail.Text, tbPassword1.Text, tbPhone.Text, tbImage.Text);
+                string jsonUser = JsonSerializer.Serialize(user);
+                var content = new StringContent(jsonUser, Encoding.UTF8, "application/json");
+                var response = await httpClient.PutAsync(apiUrl, content);
 
+                if (response.IsSuccessStatusCode)
+                {
 
-            //if (result)
-            //{
-                await Navigation.PopAsync();
-                return;
-            //}
-            await DisplayAlert("Ошибка", "Пользователь с данным логином или Email уже существует", "ОК");
-
+                    await DisplayAlert("Успешно", "Пользователь зарегистрирован", "ОК");
+                    await Navigation.PopAsync();
+                    return;
+                }
+                else
+                {
+                    await DisplayAlert("Ошибка при выполнении запроса.", "Код статуса: " + response.StatusCode, "ОК");
+                }
+            }
         }
     }
 }

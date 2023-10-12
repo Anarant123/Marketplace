@@ -18,6 +18,7 @@ namespace Marketplace
             InitializeComponent();
 
             Routing.RegisterRoute(nameof(ProductInfoPage), typeof(ProductInfoPage));
+            Routing.RegisterRoute(nameof(MyOrdersPage), typeof(MyOrdersPage));
         }
     }
 }

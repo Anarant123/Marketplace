@@ -23,8 +23,7 @@
                        IsPassword="True"/>
                 <Entry x:Name="tbPassword2" Placeholder="Повтор пароля..." 
                        IsPassword="True"/>
-                <Entry x:Name="tbImage" Placeholder="Image Url..." 
-                       IsPassword="True"/>
+                <Entry x:Name="tbImage" Placeholder="Image Url..." />
                 <Button x:Name="btnRegistration" Text="Зарегистрироваться"
                     Margin="0,20,0,0"
                     Clicked="BtnRegistration_Clicked"/>

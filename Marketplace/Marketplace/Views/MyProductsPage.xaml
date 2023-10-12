@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Marketplace.Views.MyProductsPage">
+    <ContentPage.Content>
+        <CollectionView x:Name="cvProduct"
+            SelectionMode="Single"
+            SelectionChanged="CvProduct_SelectionChanged">
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout Orientation="Vertical"
+                             Span="1" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Padding="2">
+                        <Frame BorderColor="#333333"
+                           CornerRadius="5"
+                           Padding="5">
+                            <!-- Ваш код разметки элемента плитки -->
+                            <StackLayout Orientation="Horizontal">
+                                <Image Source="icon_image.png"
+                                   HeightRequest="100"
+                                   WidthRequest="100"/>
+                                <StackLayout VerticalOptions="Center">
+                                    <Label Text="{Binding Name}"
+                                       FontAttributes="Bold"
+                                       FontSize="25"/>
+                                    <Label Text="{Binding Price}"
+                                       FontAttributes="Bold"
+                                       TextColor="Red"
+                                       FontSize="20"/>
+                                </StackLayout>
+                                <Button Text="Удалить"
+                                    Clicked="btnDeleteFromBasket_Clicked"
+                                    VerticalOptions="Center"
+                                    HorizontalOptions="EndAndExpand"
+                                    BackgroundColor="IndianRed"
+                                    CommandParameter="{Binding .}"/>
+                            </StackLayout>
+                        </Frame>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </ContentPage.Content>
+</ContentPage>

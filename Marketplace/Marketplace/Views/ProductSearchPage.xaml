@@ -35,8 +35,8 @@
                 </Frame>
             </ContentView>
             <CollectionView x:Name="cvProduct"
-            SelectionMode="Single"
-            SelectionChanged="CvProduct_SelectionChanged">
+                            SelectionMode="Single"
+                            SelectionChanged="CvProduct_SelectionChanged">
                 <CollectionView.ItemsLayout>
                     <GridItemsLayout Orientation="Vertical"
                      Span="2" />

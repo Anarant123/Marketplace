@@ -1,6 +1,6 @@
 ﻿using Marketplace.Models;
 using Marketplace.Models.db;
-using System.Text.Json;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,16 +39,22 @@ namespace Marketplace.Views
 
         private async void BtnAddToBasket_Clicked(object sender, EventArgs e)
         {
-            //var result = await Context.Api.DeleteFromFavorites(Context.AdNow.Id);
-            //if (!result)
-            //{
-            //    await DisplayAlert("Ошибка", "Что то пошло не так...", "ОК");
-            //    return;
-            //}
+            using (var httpClient = new HttpClient())
+            {
+                string apiUrl = $"{Context.host}/api/cart/add-product?userId={Context.CurrentUser.UserId}&productId={Context.CurrentProduct.ProductId}";
 
-            //await DisplayAlert("Успешно", "Объявление удалено из избранного", "ОК");
-            //btnAddToFavorites.Text = "Добавить в избранное";
-            //isF = false;
+                var response = await httpClient.PostAsync(apiUrl, null);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    await DisplayAlert("Успешно", "Товар добавлен в корзину", "ОК");
+                    return;
+                }
+                else
+                {
+                    await DisplayAlert("Ошибка при выполнении запроса.", "Код статуса: " + response.StatusCode, "ОК");
+                }
+            }
         }
 
         private async void btnSubmitComment_Clicked(object sender, EventArgs e)
@@ -67,7 +73,7 @@ namespace Marketplace.Views
                     ProductId = Context.CurrentProduct.ProductId,
                 };
 
-                string jsonReview = JsonSerializer.Serialize(review);
+                string jsonReview = JsonConvert.SerializeObject(review);
                 var content = new StringContent(jsonReview, Encoding.UTF8, "application/json");
                 var response = await httpClient.PutAsync(apiUrl, content);
 
@@ -97,7 +103,7 @@ namespace Marketplace.Views
                 if (response.IsSuccessStatusCode)
                 {
                     string responseBody = await response.Content.ReadAsStringAsync();
-                    list = JsonSerializer.Deserialize<List<Review>>(responseBody);
+                    list = JsonConvert.DeserializeObject<List<Review>>(responseBody);
                 }
                 return list;
             }

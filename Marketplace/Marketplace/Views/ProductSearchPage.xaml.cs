@@ -19,6 +19,8 @@ namespace Marketplace.Views
         public ProductSearchPage()
         {
             InitializeComponent();
+
+            pickerCategory.SelectedIndex = 0;
         }
 
         protected async override void OnAppearing()
@@ -45,10 +47,10 @@ namespace Marketplace.Views
 
         private async void btnSearch_Clicked(object sender, EventArgs e)
         {
-            //cvProduct.ItemsSource = await Context.Api.UseFulter(1, tbPriceFrom.Text, tbPriceTo.Text, tbCity.Text, Convert.ToInt32(pickerCategory.SelectedIndex), (bool)rbBuy.IsChecked!, (bool)rbSell.IsChecked!);
+            var list = await GetProductsAsync();
+            list = list.Where(x => (pickerCategory.SelectedIndex == 0 || x.CategoryId == pickerCategory.SelectedIndex) && x.Name.Contains(tbName.Text)).ToList();
 
-            //if ((cvProduct.ItemsSource as List<Ad>).Count == 0)
-            //    await DisplayAlert("Сообщение об ошибке", "С данными фильтрами ничего не найденно", "OK");
+            cvProduct.ItemsSource = list;
         }
 
         private async Task<List<Product>> GetProductsAsync()

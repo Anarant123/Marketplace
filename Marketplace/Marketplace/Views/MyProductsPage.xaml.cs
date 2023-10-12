@@ -1,6 +1,10 @@
-﻿using System;
+﻿using Marketplace.Models.db;
+using Marketplace.Models;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -21,11 +25,8 @@ namespace Marketplace.Views
         {
             base.OnAppearing();
 
-            //Context.AdList = new AdListViewModel
-            //{
-            //    Ads = await Context.Api.GetAds()
-            //};
-            //cvAds.ItemsSource = Context.AdList.Ads.ToList();
+            Context.ProductsList = await GetProductsAsync();
+            cvProduct.ItemsSource = Context.ProductsList;
         }
 
         private async void CvProduct_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -45,6 +46,29 @@ namespace Marketplace.Views
                 if (button.BindingContext is Test data)
                 {
                     await DisplayAlert("Успешно", $"Id элемента {data.Id}", "ОК");
+                }
+            }
+        }
+
+        private async Task<List<Product>> GetProductsAsync()
+        {
+            using (var httpClient = new HttpClient())
+            {
+
+                string apiUrl = $"{Context.host}/api/user/products?id={Context.CurrentUser.UserId}";
+                HttpResponseMessage response = await httpClient.GetAsync(apiUrl);
+
+                List<Product> list = new List<Product>();
+                if (response.IsSuccessStatusCode)
+                {
+                    string responseBody = await response.Content.ReadAsStringAsync();
+                    list = JsonConvert.DeserializeObject<List<Product>>(responseBody);
+                    return list;
+                }
+                else
+                {
+                    await DisplayAlert("Очень жаль", "Товары отстутствуют", "ОК");
+                    return list;
                 }
             }
         }

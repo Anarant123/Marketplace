@@ -25,7 +25,7 @@
                         <Picker x:Name="pickerCategory"
                             SelectedIndex="0">
                             <Picker.Items>
-                                <x:String>Любая</x:String>
+                                <x:String>Любая категория</x:String>
                                 <x:String>Заполнить</x:String>
                                 <x:String>Заполнить</x:String>
                                 <x:String>Заполнить</x:String>

@@ -10,5 +10,6 @@ namespace Marketplace.Models
         public static string host = "https://711d-95-26-78-239.ngrok-free.app";
         public static User? CurrentUser { get; set; } = null;
         public static List<Product> ProductsList { get; set; } = new List<Product>();
+        public static Product? CurrentProduct { get; set; } = null;
     }
 }

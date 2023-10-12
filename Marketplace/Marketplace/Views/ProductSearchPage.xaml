@@ -3,6 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Marketplace.Views.ProductSearchPage"
              Title="Перечень товаров">
+    <ContentPage.Resources>
+        <Style TargetType="Label">
+            <Setter Property="HorizontalOptions" Value="Center"/>
+        </Style>
+    </ContentPage.Resources>
+    
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Поиск"
                  Clicked="ToolbarItem_Clicked"/>
@@ -52,14 +58,24 @@
                                     <Image Source="{Binding ImageUrl}"
                                        HeightRequest="150"
                                        WidthRequest="200"/>
-                                    <Label Text="{Binding Name}"
-                                       FontAttributes="Bold"
-                                       FontSize="16"/>
-                                    <Label Text="{Binding Price}"
-                                       FontAttributes="Bold"
-                                       FontSize="12"/>
                                     <Label Text="{Binding Category.Name}"
-                                       FontSize="12"/>
+                                           FontSize="12"
+                                           TextColor="Gray"
+                                           FontAttributes="Bold"/>
+                                    <Label Text="{Binding Name}"
+                                           FontAttributes="Bold"
+                                           FontSize="16"/>
+                                    <StackLayout Orientation="Horizontal"
+                                                 HorizontalOptions="Center">
+                                        <Label Text="$"
+                                               FontAttributes="Bold"
+                                               FontSize="12"
+                                               TextColor="Red"/>
+                                        <Label Text="{Binding Price}"
+                                               FontAttributes="Bold"
+                                               FontSize="12"
+                                               TextColor="Red"/>
+                                    </StackLayout>
                                 </StackLayout>
                             </Frame>
                         </Grid>

@@ -33,9 +33,8 @@ namespace Marketplace.Views
         {
             if (e.CurrentSelection != null)
             {
-                //Context.AdNow = (Ad)e.CurrentSelection.FirstOrDefault();
-                //Context.AdNow = await Context.Api.GetAd(Context.AdNow.Id);
-                //await Shell.Current.GoToAsync(nameof(AdPage));
+                Context.CurrentProduct = (Product)e.CurrentSelection.FirstOrDefault();
+                await Shell.Current.GoToAsync(nameof(ProductInfoPage));
             }
         }
 

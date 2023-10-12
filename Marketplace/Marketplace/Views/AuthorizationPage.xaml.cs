@@ -29,8 +29,7 @@ namespace Marketplace.Views
             string password = Preferences.Get("UserPassword", "null");
             if (email != "null")
             {
-                //Context.UserNow = await Context.Api.Authorize(login, password);
-                //Context.Api.Jwt = Context.UserNow.Token;
+               
             }
         }
 
@@ -50,7 +49,7 @@ namespace Marketplace.Views
 
             if (!string.IsNullOrEmpty(ValidateFields()))
             {
-                await DisplayAlert("Ошибка", ValidateFields(), "ОК");
+                await DisplayAlert("Ошибка", result, "ОК");
                 return;
             }
 

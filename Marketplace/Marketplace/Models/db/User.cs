@@ -18,15 +18,4 @@ public class User
     public virtual ICollection<Review> Reviews { get; set; } = new List<Review>();
     public virtual ICollection<Product> Products { get; set; } = new List<Product>();
     public virtual ICollection<UserHasProductInWishlist> WishlistProducts { get; set; } = new List<UserHasProductInWishlist>();
-
-    public User(string firstName, string lastName, string email, string password, string phone, string imageUrl)
-    {
-        FirstName = firstName;
-        LastName = lastName;
-        Email = email;
-        PasswordHash = password;
-        Phone = phone;
-        ImageUrl = imageUrl;
-        RoleId = 1;
-    }
 }

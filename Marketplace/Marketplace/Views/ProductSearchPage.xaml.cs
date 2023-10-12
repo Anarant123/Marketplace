@@ -1,7 +1,10 @@
 ﻿using Marketplace.Models;
+using Marketplace.Models.db;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -22,11 +25,8 @@ namespace Marketplace.Views
         {
             base.OnAppearing();
 
-            //Context.AdList = new AdListViewModel
-            //{
-            //    Ads = await Context.Api.GetAds()
-            //};
-            //cvAds.ItemsSource = Context.AdList.Ads.ToList();
+            Context.ProductsList = await GetProductsAsync();
+            cvProduct.ItemsSource = Context.ProductsList;
         }
 
         private async void CvProduct_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -51,5 +51,29 @@ namespace Marketplace.Views
             //if ((cvProduct.ItemsSource as List<Ad>).Count == 0)
             //    await DisplayAlert("Сообщение об ошибке", "С данными фильтрами ничего не найденно", "OK");
         }
+
+        private async Task<List<Product>> GetProductsAsync()
+        {
+            using (var httpClient = new HttpClient())
+            {
+
+                string apiUrl = $"{Context.host}/api/product/getall";
+                HttpResponseMessage response = await httpClient.GetAsync(apiUrl);
+
+                List<Product> list = new List<Product>();
+                if (response.IsSuccessStatusCode)
+                {
+                    string responseBody = await response.Content.ReadAsStringAsync();
+                    list = JsonConvert.DeserializeObject<List<Product>>(responseBody);
+                    return list;
+                }
+                else
+                {
+                    await DisplayAlert("Очень жаль", "Товары отстутствуют", "ОК");
+                    return list;
+                }
+            }
+        }
+           
     }
 }

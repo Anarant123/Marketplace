@@ -49,16 +49,16 @@
                                Padding="10">
                                 <!-- Ваш код разметки элемента плитки -->
                                 <StackLayout>
-                                    <Image Source="{Binding PhotoName}"
+                                    <Image Source="{Binding ImageUrl}"
                                        HeightRequest="150"
                                        WidthRequest="200"/>
                                     <Label Text="{Binding Name}"
                                        FontAttributes="Bold"
                                        FontSize="16"/>
-                                    <Label Text="{Binding getPrice}"
+                                    <Label Text="{Binding Price}"
                                        FontAttributes="Bold"
                                        FontSize="12"/>
-                                    <Label Text="{Binding getCategory}"
+                                    <Label Text="{Binding Category.Name}"
                                        FontSize="12"/>
                                 </StackLayout>
                             </Frame>

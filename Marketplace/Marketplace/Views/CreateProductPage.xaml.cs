@@ -1,13 +1,17 @@
 ﻿using Marketplace.Models;
+using Marketplace.Models.db;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
+using Newtonsoft.Json;
 using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using static Xamarin.Essentials.Permissions;
 
 namespace Marketplace.Views
 {
@@ -18,14 +22,14 @@ namespace Marketplace.Views
         public CreateProductPage()
         {
             InitializeComponent();
-
-            pickerCategory.SelectedIndex = 0;
-
         }
 
-        private async void BtnGetPhoto_Clicked(object sender, EventArgs e)
+        protected async override void OnAppearing()
         {
-            //Фотка по URL намутить
+            base.OnAppearing();
+
+            pickerCategory.ItemsSource = await SetCategory();
+            pickerCategory.SelectedIndex = 0;
         }
 
         async private void BtnCreateAd_Clicked(object sender, EventArgs e)
@@ -37,24 +41,67 @@ namespace Marketplace.Views
             }
 
 
+            using (var httpClient = new HttpClient())
+            {
+                string apiUrl = $"{Context.host}/api/product/create";
 
-            //ad.Name = tbName.Text;
-            //ad.City = tbCity.Text;
-            //ad.CategoryId = pickerCategory.SelectedIndex + 1;
-            //ad.Description = tbDescription.Text;
-            //ad.Price = Convert.ToInt32(tbPrice.Text);
-            //ad.AdTypeId = rbBuy.IsChecked ? 1 : 2;
+                Product product = new Product()
+                {
+                    Name = tbName.Text,
+                    Description = tbDescription.Text,
+                    Price = decimal.Parse(tbPrice.Text),
+                    StockQuantity = int.Parse(tbStockQuantity.Text),
+                    ImageUrl = tbImgUrl.Text,
+                    CategoryId = pickerCategory.SelectedIndex,
+                    SellerId = Context.CurrentUser.UserId,
+                };
+                string jsonUser = JsonConvert.SerializeObject(product);
+                var content = new StringContent(jsonUser, Encoding.UTF8, "application/json");
+                var response = await httpClient.PutAsync(apiUrl, content);
 
-            //ad.Id = (await Context.Api.AddAd(ad)).Id;
-            //Context.AdNow = await Context.Api.UpdateAdPhoto(ad);
+                if (response.IsSuccessStatusCode)
+                {
 
-            //if (Context.AdNow == null)
-            //{
-            //    await DisplayAlert("Ошибка", "Что то пошло не так! \nОбъявление добавить не удалось...", "ОК");
-            //    return;
-            //}
-            await DisplayAlert("Успешно", "Вы добавили объявление", "ОК");
-            await Shell.Current.GoToAsync(nameof(ProductInfoPage));
+                    await DisplayAlert("Успешно", "Вы отправили заявку на добавление товара", "ОК");
+                    return;
+                }
+                else
+                {
+                    await DisplayAlert("Ошибка при выполнении запроса.", "Код статуса: " + response.StatusCode, "ОК");
+                }
+            }
+        }
+
+        private void tbImgUrl_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            imgProduct.Source = tbImgUrl.Text;
+        }
+
+        private async Task<List<string>> SetCategory()
+        {
+            using (var httpClient = new HttpClient())
+            {
+
+                string apiUrl = $"{Context.host}/api/category/getall";
+                HttpResponseMessage response = await httpClient.GetAsync(apiUrl);
+
+                List<Category> list = new List<Category>();
+                if (response.IsSuccessStatusCode)
+                {
+                    string responseBody = await response.Content.ReadAsStringAsync();
+                    list = JsonConvert.DeserializeObject<List<Category>>(responseBody);
+                }
+                else
+                    await DisplayAlert("Очень жаль", "Товары отстутствуют", "ОК");
+
+                var listCategories = new List<string>(){"Категория"};
+                foreach (var category in list)
+                {
+                    listCategories.Add(category.Name);
+                }
+                return listCategories;
+
+            }
         }
     }
 }

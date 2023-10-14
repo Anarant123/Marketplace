@@ -98,5 +98,9 @@ namespace Marketplace.Views
                 }
             }
         }
+        private void tbImgUrl_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            imgUser.Source = tbImage.Text;
+        }
     }
 }

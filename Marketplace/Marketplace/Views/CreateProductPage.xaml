@@ -7,33 +7,28 @@
         <ScrollView>
             <StackLayout Orientation="Vertical"
                          Margin="20,10,20,10">
-                <Image Source="icon_image.png"
-                       WidthRequest="350"
-                       x:Name="imgAd"
-                       HeightRequest="350"/>
-                <Button x:Name="btnGetPhoto" Text="Выбрать фото"
-                        Clicked="BtnGetPhoto_Clicked"
-                        HorizontalOptions="CenterAndExpand"/>
-
+                <Grid>
+                    <Image Source="icon_image.png"
+                           WidthRequest="350"
+                           HeightRequest="350"/>
+                    <Image Source="icon_image.png"
+                           WidthRequest="350"
+                           x:Name="imgProduct"
+                           HeightRequest="350"/>
+                </Grid>
 
                 <Entry x:Name="tbName" Placeholder="Название..." />
                 <Editor x:Name="tbDescription" Placeholder="Описание..." 
                         AutoSize="TextChanges"
                         MaxLength="500"
                         HeightRequest="-1"/>
-                <Picker x:Name="pickerCategory">
-                    <Picker.Items>
-                        <x:String>Заполнить</x:String>
-                        <x:String>Заполнить</x:String>
-                        <x:String>Заполнить</x:String>
-                        <x:String>Заполнить</x:String>
-                        <x:String>Заполнить</x:String>
-                    </Picker.Items>
-                </Picker>
+                <Picker x:Name="pickerCategory"/>
                 <Entry x:Name="tbPrice" Placeholder="Цена..." 
                        Keyboard="Numeric"/>
 
                 <Entry x:Name="tbStockQuantity" Placeholder="Количество запасов..."/>
+                <Entry x:Name="tbImgUrl" Placeholder="Image Url..."
+                       TextChanged="tbImgUrl_TextChanged"/>
 
                 <Button x:Name="btnCreateAd" Text="Опубликовать"
                         Clicked="BtnCreateAd_Clicked"

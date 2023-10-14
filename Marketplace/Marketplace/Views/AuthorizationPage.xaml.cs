@@ -53,7 +53,6 @@ namespace Marketplace.Views
                 return;
             }
 
-
             using (var httpClient = new HttpClient())
             {
                
@@ -76,7 +75,6 @@ namespace Marketplace.Views
                     await DisplayAlert("Ошибка при выполнении запроса.", "Код статуса: " + response.StatusCode, "ОК");
                 }
             }
-
         }
 
         async private void BtnSignUp_Clicked(object sender, EventArgs e)

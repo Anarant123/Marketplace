@@ -4,45 +4,66 @@
              x:Class="Marketplace.Views.BasketPage"
              Title="Корзина">
     <ContentPage.Content>
-        <CollectionView x:Name="cvProduct"
-                SelectionMode="Single"
-                SelectionChanged="CvProduct_SelectionChanged">
-            <CollectionView.ItemsLayout>
-                <GridItemsLayout Orientation="Vertical"
-                                 Span="1" />
-            </CollectionView.ItemsLayout>
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <Grid Padding="2">
-                        <Frame BorderColor="#333333"
-                               CornerRadius="5"
-                               Padding="5">
-                            <!-- Ваш код разметки элемента плитки -->
-                            <StackLayout Orientation="Horizontal">
-                                <Image Source="icon_image.png"
-                                       HeightRequest="100"
-                                       WidthRequest="100"/>
-                                <StackLayout VerticalOptions="Center">
-                                    <Label Text="{Binding Name}"
-                                           FontAttributes="Bold"
-                                           FontSize="25"/>
-                                    <Label Text="{Binding Price}"
-                                           FontAttributes="Bold"
-                                           TextColor="Red"
-                                           FontSize="20"/>
+        <Grid>
+            <Label Text="В вашей корзине товаров нет"
+                   x:Name="lbBasketMassage"
+                   IsVisible="false"
+                   FontSize="40"
+                   HorizontalOptions="CenterAndExpand"
+                   VerticalOptions="CenterAndExpand"
+                   HorizontalTextAlignment="Center"/>
+            <CollectionView x:Name="cvProduct"
+                            SelectionMode="Single"
+                            SelectionChanged="CvProduct_SelectionChanged">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical"
+                         Span="1" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Padding="2">
+                            <Frame BorderColor="#333333"
+                                   CornerRadius="5"
+                                   Padding="5">
+                                <!-- Ваш код разметки элемента плитки -->
+                                <StackLayout Orientation="Horizontal">
+                                    <Grid>
+                                        <Image Source="icon_image.png"
+                                               WidthRequest="100"
+                                               HeightRequest="100"/>
+                                        <Image Source="{Binding ImageUrl}"
+                                               HeightRequest="100"
+                                               WidthRequest="100"/>
+                                    </Grid>
+                                    <StackLayout VerticalOptions="Center">
+                                        <Label Text="{Binding Name}"
+                                               FontAttributes="Bold"
+                                               FontSize="25"/>
+                                        <Label Text="{Binding Price}"
+                                               FontAttributes="Bold"
+                                               TextColor="Red"
+                                               FontSize="20"/>
+                                    </StackLayout>
+                                    <StackLayout HorizontalOptions="EndAndExpand">
+                                        <Button Text="Заказать"
+                                                Clicked="btnСheckout_Clicked"
+                                                VerticalOptions="CenterAndExpand"
+                                                HorizontalOptions="Fill"
+                                                BackgroundColor="CadetBlue"
+                                                CommandParameter="{Binding .}"/>        
+                                        <Button Text="Удалить"
+                                                Clicked="btnDeleteFromBasket_Clicked"
+                                                VerticalOptions="CenterAndExpand"
+                                                HorizontalOptions="Fill"
+                                                BackgroundColor="IndianRed"
+                                                CommandParameter="{Binding .}"/>
+                                    </StackLayout>
                                 </StackLayout>
-                                <Button Text="Удалить"
-                                        Clicked="btnDeleteFromBasket_Clicked"
-                                        VerticalOptions="Center"
-                                        HorizontalOptions="EndAndExpand"
-                                        BackgroundColor="IndianRed"
-                                        CommandParameter="{Binding .}"/>
-                                        
-                            </StackLayout>
-                        </Frame>
-                    </Grid>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+                            </Frame>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

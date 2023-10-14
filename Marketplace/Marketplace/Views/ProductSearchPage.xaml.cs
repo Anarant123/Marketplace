@@ -29,6 +29,8 @@ namespace Marketplace.Views
 
             Context.ProductsList = await GetProductsAsync();
             cvProduct.ItemsSource = Context.ProductsList;
+            pickerCategory.ItemsSource = await SetCategory();
+            pickerCategory.SelectedIndex = 0;
         }
 
         private async void CvProduct_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -75,6 +77,32 @@ namespace Marketplace.Views
                 }
             }
         }
-           
+
+        private async Task<List<string>> SetCategory()
+        {
+            using (var httpClient = new HttpClient())
+            {
+
+                string apiUrl = $"{Context.host}/api/category/getall";
+                HttpResponseMessage response = await httpClient.GetAsync(apiUrl);
+
+                List<Category> list = new List<Category>();
+                if (response.IsSuccessStatusCode)
+                {
+                    string responseBody = await response.Content.ReadAsStringAsync();
+                    list = JsonConvert.DeserializeObject<List<Category>>(responseBody);
+                }
+                else
+                    await DisplayAlert("Очень жаль", "Товары отстутствуют", "ОК");
+
+                var listCategories = new List<string>() { "Категория" };
+                foreach (var category in list)
+                {
+                    listCategories.Add(category.Name);
+                }
+                return listCategories;
+
+            }
+        }
     }
 }

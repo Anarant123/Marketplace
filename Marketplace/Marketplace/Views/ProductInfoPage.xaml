@@ -33,7 +33,8 @@
                     <Label x:Name="lbStockQuantity"
                            Text="0"/>
                 </StackLayout>
-                <StackLayout Orientation="Horizontal">
+                <StackLayout Orientation="Horizontal"
+                             x:Name="sellerInfo">
                     <Label Text="Продавец: "/>
                     <Label x:Name="lbUserSeller"
                            Text="0"/>

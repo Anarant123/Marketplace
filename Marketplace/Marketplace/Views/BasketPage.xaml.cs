@@ -1,57 +1,51 @@
-﻿using Marketplace.Models.db;
+﻿using Marketplace.Models;
+using Marketplace.Models.db;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
 using Xamarin.Forms;
+using Xamarin.Forms.PlatformConfiguration.TizenSpecific;
 using Xamarin.Forms.Xaml;
 using static System.Net.Mime.MediaTypeNames;
+using static Xamarin.Essentials.Permissions;
 
 namespace Marketplace.Views
 {
-    public class Test
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public int Price { get; set; }
-    }
 
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class BasketPage : ContentPage
     {
-        Test product = new Test()
-        {
-            Id = 1,
-            Name = "John",
-            Price = 500,
-        };
+
         public BasketPage()
         {
 
             InitializeComponent();
-            cvProduct.ItemsSource = new List<Test>() { product };
+            
         }
 
         protected async override void OnAppearing()
         {
             base.OnAppearing();
 
-            //Context.AdList = new AdListViewModel
-            //{
-            //    Ads = await Context.Api.GetAds()
-            //};
-            //cvAds.ItemsSource = Context.AdList.Ads.ToList();
+            Context.ProductsList = await GetProductsAsync();
+            cvProduct.ItemsSource = Context.ProductsList;
+            if (Context.ProductsList.Any())
+                lbBasketMassage.IsVisible = false;
+            else
+                lbBasketMassage.IsVisible = true;
         }
 
         private async void CvProduct_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (e.CurrentSelection != null)
             {
-                //Context.AdNow = (Ad)e.CurrentSelection.FirstOrDefault();
-                //Context.AdNow = await Context.Api.GetAd(Context.AdNow.Id);
-                //await Shell.Current.GoToAsync(nameof(AdPage));
+                Context.CurrentProduct = (Product)e.CurrentSelection.FirstOrDefault();
+                await Shell.Current.GoToAsync(nameof(ProductInfoPage));
             }
         }
 
@@ -59,9 +53,85 @@ namespace Marketplace.Views
         {
             if (sender is Button button)
             {
-                if (button.BindingContext is Test data)
+                if (button.BindingContext is Product product)
                 {
-                    await DisplayAlert("Успешно", $"Id элемента {data.Id}", "ОК");
+                    using (var httpClient = new HttpClient())
+                    {
+
+                        string apiUrl = $"{Context.host}/api/cart/remove-product?userId={Context.CurrentUser.UserId}&productId={product.ProductId}";
+                        HttpResponseMessage response = await httpClient.PostAsync(apiUrl, null);
+
+                        if (response.IsSuccessStatusCode)
+                        {
+                            Context.ProductsList = await GetProductsAsync();
+                            cvProduct.ItemsSource = Context.ProductsList;
+                        }
+                        else
+                        {
+                            await DisplayAlert("Ошибка при выполнении запроса.", "Код статуса: " + response.StatusCode, "ОК");
+                        }
+                    }
+                }
+            }
+        }
+
+        private async void btnСheckout_Clicked(object sender, EventArgs e)
+        {
+            if (sender is Button button)
+            {
+                if (button.BindingContext is Product product)
+                {
+                    using (var httpClient = new HttpClient())
+                    {
+
+                        string apiUrl = $"{Context.host}/api/order/create";
+
+                        Order order = new Order()
+                        {
+                            TotalQuantity = 1,
+                            TotalAmount = product.Price,
+                            UserId = Context.CurrentUser.UserId,
+                            ProductId = product.ProductId,
+                        };
+                        string jsonUser = JsonConvert.SerializeObject(order);
+                        var content = new StringContent(jsonUser, Encoding.UTF8, "application/json");
+                        var response = await httpClient.PutAsync(apiUrl, content);
+
+                        if (response.IsSuccessStatusCode)
+                        {
+
+                            await DisplayAlert("Успешно", "Заказ оформлен", "ОК");
+                            await Navigation.PopAsync();
+                            return;
+                        }
+                        else
+                        {
+                            await DisplayAlert("Ошибка при выполнении запроса.", "Код статуса: " + response.StatusCode, "ОК");
+                        }
+                    }
+                }
+            }
+        }
+
+        private async Task<List<Product>> GetProductsAsync()
+        {
+            using (var httpClient = new HttpClient())
+            {
+
+                string apiUrl = $"{Context.host}/api/cart?userId={Context.CurrentUser.UserId}";
+                HttpResponseMessage response = await httpClient.GetAsync(apiUrl);
+
+                List<Product> list = new List<Product>();
+                if (response.IsSuccessStatusCode)
+                {
+                    string responseBody = await response.Content.ReadAsStringAsync();
+                    list = JsonConvert.DeserializeObject<List<Product>>(responseBody);
+                    return list;
+                }
+                else
+                {
+                    await DisplayAlert("Очень жаль", "Товары отстутствуют", "ОК");
+                    return list;
                 }
             }
         }

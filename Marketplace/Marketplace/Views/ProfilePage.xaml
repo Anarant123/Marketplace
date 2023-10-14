@@ -8,37 +8,38 @@
             <StackLayout Orientation="Vertical"
                          Margin="20,10,20,10"
                          Spacing="10">
-                <Image Source="icon_image.png"
-                       x:Name="imgProfile"
-                       WidthRequest="300"
-                       HeightRequest="300"/>
-                <Grid VerticalOptions="CenterAndExpand">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                    <Button x:Name="btnGetPhoto" Text="Выбрать фото"
-                            FontSize="14"
-                            Clicked="BtnGetPhoto_Clicked"
-                            VerticalOptions="CenterAndExpand"
-                            Grid.Column="0"/>
-                    <Button x:Name="btnSaveChanges" Text="Сохранить изменения"
-                            FontSize="14"
-                            Clicked="BtnSaveChanges_Clicked"
-                            VerticalOptions="CenterAndExpand"
-                            Grid.Column="1"/>
+                <Grid>
+                    <Image Source="icon_image.png"
+                           WidthRequest="350"
+                           HeightRequest="350"/>
+                    <Image Source="icon_image.png"
+                           WidthRequest="350"
+                           x:Name="imgUser"
+                           HeightRequest="350"/>
                 </Grid>
+                <Button x:Name="btnShowMyOrders" Text="Мои заказы"
+                        FontSize="16"
+                        Clicked="btnShowMyOrders_Clicked"
+                        HorizontalOptions="Fill"
+                        Margin="0,0,0,10"/>
                 <Entry x:Name="tbFirstName" Placeholder="Имя..."/>
                 <Entry x:Name="tbLastName" Placeholder="Фамилия..."/>
                 <Entry x:Name="tbPhone" Placeholder="Телефон..."
                        Keyboard="Telephone"/>
                 <Entry x:Name="tbEmail" Placeholder="Почта..." 
                        Keyboard="Email"/>
-                <Button x:Name="btnShowMyOrders" Text="Мои заказы"
-                        FontSize="16"
-                        Clicked="btnShowMyOrders_Clicked"
-                        HorizontalOptions="Fill"
-                        Margin="0,0,0,10"/> 
+                <Entry x:Name="tbPassword1" Placeholder="Пароль..." 
+                       IsPassword="True"/>
+                <Entry x:Name="tbPassword2" Placeholder="Повтор пароля..." 
+                       IsPassword="True"/>
+                <Entry x:Name="tbImgUrl" Placeholder="Image Url..." 
+                       Keyboard="Email"
+                       TextChanged="tbImgUrl_TextChanged"/>
+                <Button x:Name="btnSaveChanges" Text="Сохранить изменения"
+                        FontSize="14"
+                        Clicked="BtnSaveChanges_Clicked"
+                        VerticalOptions="CenterAndExpand"
+                        Margin="0,0,0,10"/>   
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

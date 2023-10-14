@@ -3,10 +3,71 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Marketplace.Views.MyOrdersPage">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
+        <Grid>
+            <Label Text="У вас нет оформленных заказов"
+               x:Name="lbBasketMassage"
+               IsVisible="false"
+               FontSize="40"
+               HorizontalOptions="CenterAndExpand"
+               VerticalOptions="CenterAndExpand"
+               HorizontalTextAlignment="Center"/>
+            <CollectionView x:Name="cvOrders"
+                        SelectionMode="Single"
+                        SelectionChanged="CvOrders_SelectionChanged">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical"
+                                     Span="1" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Padding="2">
+                            <Frame BorderColor="#333333"
+                                   CornerRadius="5"
+                                   Padding="5">
+                                <StackLayout>
+                                    <StackLayout HorizontalOptions="Center"
+                                                 Orientation="Horizontal">
+                                        <Label Text="Номер заказа: "
+                                               FontAttributes="Bold"
+                                               FontSize="25"/>
+                                        <Label Text="{Binding OrderId}"
+                                               FontAttributes="Bold"
+                                               FontSize="25"/>
+                                    </StackLayout>
+                                    <StackLayout HorizontalOptions="Center">
+                                        <Label Text="Дата заказа: "
+                                               FontAttributes="Bold"
+                                               FontSize="25"
+                                               HorizontalOptions="Center"/>
+                                        <Label Text="{Binding OrderDate}"
+                                               FontAttributes="Bold"
+                                               FontSize="25"
+                                               HorizontalOptions="Center"/>
+                                    </StackLayout>
+                                    <StackLayout HorizontalOptions="Center"
+                                                 Orientation="Horizontal">
+                                        <Label Text="$"
+                                               FontAttributes="Bold"
+                                               TextColor="Red"
+                                               FontSize="20"/>      
+                                        <Label Text="{Binding TotalAmount}"
+                                               FontAttributes="Bold"
+                                               TextColor="Red"
+                                               FontSize="20"/>
+                                    </StackLayout>
+
+                                    <Button Text="Отменить"
+                                            Clicked="btnCancelOrder_Clicked"
+                                            VerticalOptions="Center"
+                                            HorizontalOptions="Center"
+                                            BackgroundColor="IndianRed"
+                                            CommandParameter="{Binding .}"/>
+                                </StackLayout>
+                            </Frame>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

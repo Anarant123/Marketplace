@@ -27,25 +27,43 @@ namespace Marketplace.Views
 
             Context.ProductsList = await GetProductsAsync();
             cvProduct.ItemsSource = Context.ProductsList;
+            if (Context.ProductsList.Any())
+                lbMassage.IsVisible = false;
+            else
+                lbMassage.IsVisible = true;
         }
 
         private async void CvProduct_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (e.CurrentSelection != null)
             {
-                //Context.AdNow = (Ad)e.CurrentSelection.FirstOrDefault();
-                //Context.AdNow = await Context.Api.GetAd(Context.AdNow.Id);
-                //await Shell.Current.GoToAsync(nameof(AdPage));
+                Context.CurrentProduct = (Product)e.CurrentSelection.FirstOrDefault();
+                await Shell.Current.GoToAsync(nameof(ProductInfoPage));
             }
         }
 
-        private async void btnDeleteFromBasket_Clicked(object sender, EventArgs e)
+        private async void btnDelete_Clicked(object sender, EventArgs e)
         {
             if (sender is Button button)
             {
-                if (button.BindingContext is Test data)
+                if (button.BindingContext is Product product)
                 {
-                    await DisplayAlert("Успешно", $"Id элемента {data.Id}", "ОК");
+                    using (var httpClient = new HttpClient())
+                    {
+
+                        string apiUrl = $"{Context.host}/api/product/deletebyid/{product.ProductId}";
+                        HttpResponseMessage response = await httpClient.DeleteAsync(apiUrl);
+
+                        if (response.IsSuccessStatusCode)
+                        {
+                            Context.ProductsList = await GetProductsAsync();
+                            cvProduct.ItemsSource = Context.ProductsList;
+                        }
+                        else
+                        {
+                            await DisplayAlert("Ошибка при выполнении запроса.", "Код статуса: " + response.StatusCode, "ОК");
+                        }
+                    }
                 }
             }
         }

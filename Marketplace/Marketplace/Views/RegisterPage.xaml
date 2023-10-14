@@ -13,6 +13,15 @@
     <ContentPage.Content>
         <ScrollView>
             <StackLayout Margin="20,10,20,10">
+                <Grid>
+                    <Image Source="icon_image.png"
+                           WidthRequest="350"
+                           HeightRequest="350"/>
+                    <Image Source="icon_image.png"
+                           WidthRequest="350"
+                           x:Name="imgUser"
+                           HeightRequest="350"/>
+                </Grid>
                 <Entry x:Name="tbFirstName" Placeholder="Имя..."/>
                 <Entry x:Name="tbLastName" Placeholder="Фамилия..."/>
                 <Entry x:Name="tbPhone" Placeholder="Телефон..."
@@ -23,9 +32,10 @@
                        IsPassword="True"/>
                 <Entry x:Name="tbPassword2" Placeholder="Повтор пароля..." 
                        IsPassword="True"/>
-                <Entry x:Name="tbImage" Placeholder="Image Url..." />
+                <Entry x:Name="tbImage" Placeholder="Image Url..."
+                       TextChanged="tbImgUrl_TextChanged"/>
                 <Button x:Name="btnRegistration" Text="Зарегистрироваться"
-                    Margin="0,20,0,0"
+                    Margin="0,20,0,10"
                     Clicked="BtnRegistration_Clicked"/>
             </StackLayout>
         </ScrollView>

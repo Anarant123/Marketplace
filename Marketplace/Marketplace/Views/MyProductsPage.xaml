@@ -3,7 +3,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Marketplace.Views.MyProductsPage">
     <ContentPage.Content>
-        <CollectionView x:Name="cvProduct"
+        <Grid>
+            <Label Text="У вас нет товаров"
+           x:Name="lbMassage"
+           IsVisible="false"
+           FontSize="40"
+           HorizontalOptions="CenterAndExpand"
+           VerticalOptions="CenterAndExpand"
+           HorizontalTextAlignment="Center"/>
+            <CollectionView x:Name="cvProduct"
             SelectionMode="Single"
             SelectionChanged="CvProduct_SelectionChanged">
             <CollectionView.ItemsLayout>
@@ -18,9 +26,14 @@
                                Padding="5">
                             <!-- Ваш код разметки элемента плитки -->
                             <StackLayout Orientation="Horizontal">
-                                <Image Source="{Binding ImageUrl}"
-                                       HeightRequest="100"
-                                       WidthRequest="100"/>
+                                    <Grid>
+                                        <Image Source="icon_image.png"
+                                               WidthRequest="100"
+                                               HeightRequest="100"/>
+                                        <Image Source="{Binding ImageUrl}"
+                                               HeightRequest="100"
+                                               WidthRequest="100"/>
+                                    </Grid>
                                 <StackLayout VerticalOptions="Center">
                                     <Label Text="{Binding Name}"
                                            FontAttributes="Bold"
@@ -31,7 +44,7 @@
                                            FontSize="20"/>
                                 </StackLayout>
                                 <Button Text="Удалить"
-                                        Clicked="btnDeleteFromBasket_Clicked"
+                                        Clicked="btnDelete_Clicked"
                                         VerticalOptions="Center"
                                         HorizontalOptions="EndAndExpand"
                                         BackgroundColor="IndianRed"
@@ -42,5 +55,6 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

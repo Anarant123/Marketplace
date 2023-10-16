@@ -42,10 +42,27 @@ namespace Marketplace.Views
 
         private async void CvProduct_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (e.CurrentSelection != null)
+            if (cvProduct.SelectedItem is Product selectedProduct)
             {
-                Context.CurrentProduct = (Product)e.CurrentSelection.FirstOrDefault();
-                await Shell.Current.GoToAsync(nameof(ProductInfoPage));
+                using (var httpClient = new HttpClient())
+                {
+
+                    string apiUrl = $"{Context.host}/api/product/getbyid/{selectedProduct.ProductId}";
+                    HttpResponseMessage response = await httpClient.GetAsync(apiUrl);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        string responseBody = await response.Content.ReadAsStringAsync();
+                        Context.CurrentProduct = JsonConvert.DeserializeObject<Product>(responseBody);
+
+                        await Shell.Current.GoToAsync(nameof(ProductInfoPage));
+                        return;
+                    }
+                    else
+                    {
+                        await DisplayAlert("Ошибка при выполнении запроса.", "Код статуса: " + response.StatusCode, "ОК");
+                    }
+                }
             }
         }
 
@@ -79,6 +96,13 @@ namespace Marketplace.Views
         {
             if (sender is Button button)
             {
+                string result = await DisplayPromptAsync("Укажите количество", "", "ОК", "Отмена", "Количество", 3, Keyboard.Default, "");
+
+                if (result == null)
+                    return;
+
+                var count = int.Parse(result);
+
                 if (button.BindingContext is Product product)
                 {
                     using (var httpClient = new HttpClient())
@@ -88,8 +112,8 @@ namespace Marketplace.Views
 
                         Order order = new Order()
                         {
-                            TotalQuantity = 1,
-                            TotalAmount = product.Price,
+                            TotalQuantity = count,
+                            TotalAmount = product.Price * count,
                             UserId = Context.CurrentUser.UserId,
                             ProductId = product.ProductId,
                         };

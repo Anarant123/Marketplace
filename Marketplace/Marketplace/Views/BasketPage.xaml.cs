@@ -123,7 +123,8 @@ namespace Marketplace.Views
 
                         if (response.IsSuccessStatusCode)
                         {
-
+                            string apiUrlRemove = $"{Context.host}/api/cart/remove-product?userId={Context.CurrentUser.UserId}&productId={product.ProductId}";
+                            HttpResponseMessage responseRemove = await httpClient.PostAsync(apiUrlRemove, null);
                             await DisplayAlert("Успешно", "Заказ оформлен", "ОК");
                             await Navigation.PopAsync();
                             return;

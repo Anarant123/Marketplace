@@ -18,7 +18,6 @@ namespace Marketplace.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class CreateProductPage : ContentPage
     {
-        //readonly AddAdModel ad = new();
         public CreateProductPage()
         {
             InitializeComponent();
@@ -34,7 +33,11 @@ namespace Marketplace.Views
 
         async private void BtnCreateAd_Clicked(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(tbName.Text) || string.IsNullOrEmpty(tbPrice.Text) || string.IsNullOrEmpty(tbDescription.Text) || string.IsNullOrEmpty(tbStockQuantity.Text))
+            if (string.IsNullOrEmpty(tbName.Text) ||
+                string.IsNullOrEmpty(tbPrice.Text) ||
+                string.IsNullOrEmpty(tbDescription.Text) ||
+                string.IsNullOrEmpty(tbStockQuantity.Text) ||
+                pickerCategory.SelectedIndex == 0)
             {
                 await DisplayAlert("Ошибка", "Заполните все поля!", "ОК");
                 return;
@@ -102,6 +105,13 @@ namespace Marketplace.Views
                 return listCategories;
 
             }
+        }
+
+        private void tbStockQuantity_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string text = tbPrice.Text;
+            string digitsOnly = new string(text.Where(char.IsDigit).ToArray());
+            tbPrice.Text = digitsOnly;
         }
     }
 }

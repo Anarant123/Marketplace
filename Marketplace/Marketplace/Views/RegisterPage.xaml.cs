@@ -57,7 +57,7 @@ namespace Marketplace.Views
 
             bool IsValidPhone(string phone)
             {
-                string pattern = @"^(\+)[1-9][0-9\-().]{9,15}$";
+                string pattern = @"^(\+?)[1-9][0-9\-().]{9,15}$";
                 Match match = Regex.Match(phone, pattern);
                 return match.Success;
             }

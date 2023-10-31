@@ -111,6 +111,17 @@ namespace Marketplace.Views
         {
             string text = tbPrice.Text;
             string digitsOnly = new string(text.Where(char.IsDigit).ToArray());
+
+            if (!string.IsNullOrEmpty(digitsOnly))
+            {
+                int value = int.Parse(digitsOnly);
+                if (value < 0)
+                {
+                    value = Math.Abs(value);
+                    digitsOnly = value.ToString();
+                }
+            }
+
             tbPrice.Text = digitsOnly;
         }
     }
